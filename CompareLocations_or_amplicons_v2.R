@@ -260,10 +260,10 @@ plotIntestineLocations <- function(qiime_out = file.path(home.dir,'Work_dir/DATA
 # OUTPUT:
 # stacked barplot with lenend 
 compTaxa <- function(file1,loc1,file2,loc2,file3,loc3,percent_threshold = 0.01,
-                     remove.outliers = 0.01,sample.cov.filter=0,main_ = ''){
+                     remove.outliers = 0.01,sample.cov.filter=5000,main_ = ''){
   library(stringr)
   library(ggplot2)
-  source('/home/lev-genetik/Desktop/Projects/liege/src/Lev/Functions_general_non_enterotyping.R')
+  source(file.path(progr.dir,'Functions_general_non_enterotyping.R'))
   df1 <- readQiimeSmart(input_file = file1, locat = loc1, percent_threshold = percent_threshold,
                         remove.outliers = remove.outliers,sample.cov.filter=sample.cov.filter)
   df2 <- readQiimeSmart(input_file = file2, locat = loc2, percent_threshold = percent_threshold,
@@ -363,6 +363,75 @@ compTaxa <- function(file1,loc1,file2,loc2,file3,loc3,percent_threshold = 0.01,
           main=main_,
           args.legend = c(cex=1,xjust=-0.2))
 }
+
+# Compare SDs of taxa fraction in specific location vs matched number of samples in all locations
+# INPUT:
+# (if to_plot = T need to open connection before running the program and close after!)
+# file, location 
+# percent_threshold - to remove noise taxa
+# remove.outliers - p-value threshold to remove outliers farest from the other samples
+# sample.cov.filter = sample.cov.filter for readQiimeSmart
+# to_plot - if plot a plot of SD of location vs all locations' subsample
+# t_test - if calculate t-test of SD of location vs all locations' subsample
+# OUTPUT:
+# plot (see to_plot) or p-value of t-test (po umolch) or both
+compTaxaSDLocat <- function(input_file,locat,percent_threshold = 0.01,
+                     remove.outliers = 0.01,sample.cov.filter=5000,
+                     to_plot = F, t_test = T){
+  library(stringr)
+  library(ggplot2)
+  source(file.path(progr.dir,'Functions_general_non_enterotyping.R'))
+  df1 <- readQiimeSmart(input_file = input_file, locat = locat, percent_threshold = percent_threshold,
+                        remove.outliers = remove.outliers,sample.cov.filter=sample.cov.filter)
+  df2 <- readQiimeSmart(input_file = input_file, locat = 'all', percent_threshold = percent_threshold,
+                        remove.outliers = remove.outliers,sample.cov.filter=sample.cov.filter)
+  # select random k colons from the table
+  df2 <- subset(df2,select = sample(dim(df2)[2])[1:dim(df1)[2]])
+  # and take into account only taxa that are present in both df1 anddf2 after all filtrations
+  df1 <- df1[rownames(df1)%in%intersect(rownames(df1),rownames(df2)),]
+  df2 <- df2[rownames(df2)%in%intersect(rownames(df1),rownames(df2)),]
+  
+  # in each column, need to obtain fraction of each bacteria
+  # df1
+  df1_col_sum <- colSums(df1)
+  df1_norm <- df1
+  for (i in 1:dim(df1)[2]){
+    df1_norm[,i] <- df1[,i]/df1_col_sum[i]
+  }
+  # df2
+  df2_col_sum <- colSums(df2)
+  df2_norm <- df2
+  for (i in 1:dim(df2)[2]){
+    df2_norm[,i] <- df2[,i]/df2_col_sum[i]
+  }
+ 
+  # calculate average abundance and SD per taxon
+  # get matrix taxon-average-SD
+  taxon_distr <- matrix(0,dim(df1)[1],6)
+  tag_df1 <- paste0(word(input_file,start=-2,sep='/'),'_',locat_trim(locat))
+  for (i in 1:dim(df1)[1]){
+    taxon_distr[i,1] <- tag_df1
+    taxon_distr[i,2] <- rownames(df1_norm)[i] 
+    taxon_distr[i,3] <- mean(as.numeric(df1_norm[i,]))
+    taxon_distr[i,4] <- sd(as.numeric(df1_norm[i,]))
+    # taxon_distr[i,5] <- mean(as.numeric(df2_norm[i,]))
+    taxon_distr[i,6] <- sd(as.numeric(df2_norm[i,]))
+  }
+  colnames(taxon_distr) <- c('Source','Taxon',paste0('Mean_',locat_trim(locat)),
+                             paste0('SD_',locat_trim(locat)),'Mean_all_loc_subsample','SD_all_loc_subsample')
+  if(to_plot==TRUE){
+  plot(taxon_distr[,c(4,6)],xlim=c(0,max(as.numeric(taxon_distr[,4]),as.numeric(taxon_distr[,6]))*1.1),
+       ylim=c(0,max(as.numeric(taxon_distr[,4]),as.numeric(taxon_distr[,6]))*1.1),main = tag_df1,
+       cex=4,cex.lab=4,cex.main=5,cex.axis=4,pch=20)
+    lines(rbind(c(0,0),c(1,1)),col='darkblue')
+  }
+  if(t_test==TRUE){
+    result <- signif(t.test(as.numeric(taxon_distr[,4]),as.numeric(taxon_distr[,6]))$p.value,digits = 3)
+    return(result)
+  }
+}
+
+
 
 
 # Compare taxa in three locations - draw BOXPLOTS

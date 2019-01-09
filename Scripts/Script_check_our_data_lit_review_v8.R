@@ -605,42 +605,48 @@ dev.off()
 
 # 5. Compare taxa in different locations (and amplicons)
 source(file.path(progr.dir,'CompareLocations_or_amplicons_v2.R'))
-setwd(paste0(home.dir,'/Results/Locations_compare/Genera_abundance_plot'))
+setwd(file.path(home.dir,'/Results/Locations_compare/Genera_abundance_plot'))
 jpeg('v1v2_IL_TR_RE.jpg',width = 2000, height = 2000)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V1V2 amplicon')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V1V2 amplicon',
+         sample.cov.filter=5000)
 dev.off()
 jpeg('v3v4_IL_TR_RE.jpg',width = 2000, height = 2000)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V3V4 amplicon')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V3V4 amplicon',
+         sample.cov.filter=5000)
 dev.off()
 jpeg('v5v6_IL_TR_RE.jpg',width = 2000, height = 2000)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V5V6 amplicon')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         loc1='.IL',loc2 = '.TR',loc3 = '.RE',main_ = 'Top abundant genera, V5V6 amplicon',
+         sample.cov.filter=5000)
 dev.off()
 jpeg('v1v2_v3v4_v5v6_IL',width = 3800, height = 3800)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         loc1='.IL',loc2 = '.IL',loc3 = '.IL')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         loc1='.IL',loc2 = '.IL',loc3 = '.IL',
+         sample.cov.filter=5000)
 dev.off()
 jpeg('v1v2_v3v4_v5v6_TR',width = 3800, height = 3800)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         loc1='.TR',loc2 = '.TR',loc3 = '.TR')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         loc1='.TR',loc2 = '.TR',loc3 = '.TR',
+         sample.cov.filter=5000)
 dev.off()
 jpeg('v1v2_v3v4_v5v6_RE',width = 3800, height = 3800)
-compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt',
-         file2='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
-         file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt',
-         loc1='.RE',loc2 = '.RE',loc3 = '.RE')
+compTaxa(file1=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+         file2=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+         file3=file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+         loc1='.RE',loc2 = '.RE',loc3 = '.RE',
+         sample.cov.filter=5000)
 dev.off()
 
 # Make family-level boxplots
@@ -651,6 +657,32 @@ compTaxa(file1='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summariz
          file3='/media/lev-genetik/980E73270E72FD96/Liege/Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt',
          loc1='.IL',loc2 = '.TR',loc3 = '.RE',sample.cov.filter=13000,draw.boxplots=T,draw.stackplots=F)
 dev.off()
+
+# 5b. Compare variance (more precisely, SD) in 1 location vs in equivalent number of random samples across locations
+source(file.path(progr.dir,'CompareLocations_or_amplicons_v2.R'))
+setwd(file.path(home.dir,'/Results/Locations_compare/Variance_compare'))
+variance_matr <- matrix(0,3,3)
+colnames(variance_matr) <- c('IL','TR','RE')
+rownames(variance_matr) <- c('V1V2','V3V4','V5V6')
+
+jpeg('variance_IL_TR_RE_v12_v34_v56.jpg',width = 2000, height = 2000)
+par(mfrow=c(3,3),mar=c(9,9,6,2),mgp=c(6,2,0))
+locations <- c('.IL','.TR','.RE')
+row_=1
+for(j in locations){
+  variance_matr[row_,1] <- compTaxaSDLocat(input_file = file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V1V2/otu_table_L6.txt'),
+                locat = j,percent_threshold = 0.01, remove.outliers = 0.01,sample.cov.filter=5000,
+                to_plot = T, t_test = T)
+  variance_matr[row_,2] <- compTaxaSDLocat(input_file = file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V3V4/otu_table_L6.txt'),
+                locat = j,percent_threshold = 0.01, remove.outliers = 0.01,sample.cov.filter=5000,
+                to_plot = T, t_test = T)
+  variance_matr[row_,3] <- compTaxaSDLocat(input_file = file.path(home.dir,'Work_dir/DATA/summarize_taxa_counts/V5V6/otu_table_L6.txt'),
+                locat = j,percent_threshold = 0.01, remove.outliers = 0.01,sample.cov.filter=5000,
+                to_plot = T, t_test = T)
+row_ <- row_+1
+}
+dev.off()
+
 
 
 #6. Bacteria fraction agreement across amplicons
